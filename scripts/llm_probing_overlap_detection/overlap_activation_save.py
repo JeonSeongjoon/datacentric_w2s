@@ -1,6 +1,6 @@
 import os
 import sys
-sys.path.append("/u/c/h/chshin/changho/datacentric_w2s")
+sys.path.append("/content/datacentric_w2s")
 from pathlib import Path
 import os
 import torch
