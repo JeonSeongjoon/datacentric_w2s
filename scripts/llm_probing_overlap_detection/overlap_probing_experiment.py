@@ -57,7 +57,7 @@ for dataset_name in VALID_DATASETS:
         n_predict=0,
         minibatch_size=1,
         batch_size=32,
-        results_folder="../../results",
+        results_folder="./results",
         seed=seed,
         disable_lora=True,
         strong_only=True,
