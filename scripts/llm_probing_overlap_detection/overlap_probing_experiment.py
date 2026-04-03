@@ -33,7 +33,7 @@ import argparse
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Overlap probing experiment")
-    parser.add_argument("--seed", type=int, default=0, help="Random seed")
+    parser.add_argument("--seed", type=int, default=42, help="Random seed")
     return parser.parse_args()
 
 args = parse_args()
@@ -349,6 +349,8 @@ for dataset_name in VALID_DATASETS:
         w2s_overlap_acc = (w2s_overlap_preds.round() == y_test).float().mean().item()
         acc_list.append(w2s_overlap_acc)
     
+    os.makedirs("./results/figure/", exist_ok=True)
+
     plt.axhline(y=weak_test_accuracy, color='b', linestyle='--', label='weak')
     plt.axhline(y=w2s_test_accuracy, color='g', linestyle='--', label='ws')
     plt.axhline(y=strong_test_accuracy, color='r', linestyle='--', label='strong (gt)')
@@ -358,6 +360,7 @@ for dataset_name in VALID_DATASETS:
     plt.title(dataset_name+f' seed: {seed}')
     plt.legend()
     plt.grid()
+    plt.savefig(f"./results/figure/{dataset_name}_seed_{seed}.png")
     plt.show()
 
     result = {
@@ -372,8 +375,8 @@ for dataset_name in VALID_DATASETS:
     }
 
     
-    if not os.path.exists(f'../../results/linear_probing_eval/'):
-        os.makedirs(f'../../results/linear_probing_eval/')
+    if not os.path.exists(f'./results/linear_probing_eval/'):
+        os.makedirs(f'./results/linear_probing_eval/')
 
-    with open(f'../../results/linear_probing_eval/overlap_probing_results_{dataset_name}_{seed}.json', 'w') as f:
+    with open(f'./results/linear_probing_eval/overlap_probing_results_{dataset_name}_{seed}.json', 'w') as f:
         json.dump(result, f)
